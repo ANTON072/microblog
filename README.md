@@ -7,7 +7,7 @@ http://localhost:9999
 - Ruby on Rails
 - MySQL (MariaDB)
 
-## Frontend Ver.1
+## Frontend Ver.SPA
 
 http://localhost:3000
 
