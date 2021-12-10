@@ -2,10 +2,19 @@
 
 # syntax=docker/dockerfile:1
 FROM ruby:2.6.3
-RUN apt-get update -qq && apt-get install -y nodejs mariadb-client
+
+# yarnをインストールするためのセットアップ
+RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN apt-get update -qq && apt-get install -y build-essential libxslt-dev libxml2-dev cmake nodejs npm mariadb-client yarn && npm install n -g && n 16.13.1
+
 WORKDIR /myapp
+
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
+
 RUN bundle install
 
 # コンテナが起動するたびに実行されるスクリプトの追加
